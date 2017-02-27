@@ -19,26 +19,26 @@ En sida för att visa ett specifikt recept. Här kan man även skriva kommentare
 #Databasens innehåll:
 
 ##User
-id		    (serial)
-name		(text)
-hash		(text)
-salt		(text)
+    id		    (serial)
+    name		(text)
+    hash		(text)
+    salt		(text)
 
 ##Recipe
-id		    (serial)
-author		(int)
-name		(text)
-image		(text)
-freetext	(text)
-createdAt	(timestamp)
-updatedAt	(timestamp)
-tags		(text[ ])
+    id		    (serial)
+    author		(int)
+    name		(text)
+    image		(text)
+    freetext	(text)
+    createdAt	(timestamp)
+    updatedAt	(timestamp)
+    tags		(text[ ])
 
 ##Comment
-id          (serial)
-recipeId    (int)
-author 		(int)
-freetext	(text)
-createdAt	(timestamp)
-updatedAt	(timestamp)
+    id          (serial)
+    recipeId    (int)
+    author 		(int)
+    freetext	(text)
+    createdAt	(timestamp)
+    updatedAt	(timestamp)
 
