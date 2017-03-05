@@ -1,3 +1,5 @@
+'use strict';
+
 var Sequelize = require('sequelize');
 
 module.exports = function (seq) {
@@ -11,7 +13,7 @@ module.exports = function (seq) {
 		},
 		name: {
 			type: Sequelize.STRING
-		}.
+		},
 		hash: {
 			type: Sequelize.STRING
 		},
@@ -33,13 +35,13 @@ module.exports = function (seq) {
 			type: Sequelize.STRING
 		},
 		image: {
-			type: Sequelize.DOUBLE
+			type: Sequelize.STRING
 		},
 		freetext: {
-			type: Sequelize.INTEGER
+			type: Sequelize.STRING
 		},
 		tags: {
-			type: Sequelize.ARRAY(Sequelize.INTEGER);
+			type: Sequelize.ARRAY(Sequelize.INTEGER)
 		}
 	});
 
