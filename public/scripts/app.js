@@ -1,18 +1,22 @@
-/*global angular */
+'use strict';
 
 angular.module('app', ['ngMaterial', 'ngRoute', 'ngMdIcons'])
 	.config(function ($routeProvider) {
-		'use strict';
 		$routeProvider
 			.when('/', {
 				templateUrl: 'views/home.html'
+			})
+			.when('/recipe', {
+				templateUrl: 'views/recipe.html'
+			})
+			.when('/search', {
+				templateUrl: 'views/search.html'
 			})
 			.otherwise({
 				templateUrl: 'views/404.html'
 			});
 	})
 	.config(function ($mdThemingProvider) {
-		'use strict';
 		$mdThemingProvider.theme('default')
 			.primaryPalette('teal', {
 				'default': '500',

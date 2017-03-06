@@ -1,24 +1,22 @@
-/*global angular*/
+'use strict';
 
 angular.module('app').controller('mainController', function ($scope, $log, $http, $timeout) {
-	'use strict';
-	
-	$scope.greeting = undefined;
-	
-	function getGreeting() {
-		$http.get('/api/greeting', {params: {name: 'Mr. World'}}).then(
+	$scope.user = 'Guest';
+	$scope.usernames = [];
+
+	function getUsernames () {
+		$http.get('/api/usernames').then(
 			function (res) {
-				$scope.greeting = res.data.greeting;
-			},
-			function (err) {
-				$log.info('Could not get greeting.');
+				$log.info(res.data);
+			}, function (err) {
+				$log.info(err);
 			}
 		);
 	}
-	
-	function init() {
-		getGreeting();
+
+	function init () {
+		getUsernames();
 	}
-	
-	$timeout(init);
+
+	$timeout(init());
 });
