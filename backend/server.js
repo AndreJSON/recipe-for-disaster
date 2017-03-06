@@ -1,4 +1,3 @@
-/*jslint node: true, nomen: true, es5: true*/
 'use strict';
 var port = 8080;
 var express = require('express');
