@@ -1,8 +1,9 @@
 'use strict';
 
-var Sequelize = require('sequelize');
+var bcrypt = require('bcypt');
 
-var seq = new Sequelize('rfd', 'postgres', null, {
+var sequelize = require('sequelize');
+var conn = new sequelize('rfd', 'postgres', null, {
 	host: 'localhost',
 	dialect: 'postgres',
 	pool: {
@@ -13,7 +14,17 @@ var seq = new Sequelize('rfd', 'postgres', null, {
 	logging: true //Set to true if debugging needed.
 });
 
-var model = require('./model.js')(seq); //Create the models.
+var model = require('./model.js')(conn); //Create the models.
+
+exports.addUser = function (name, password) {
+	var salt = bcrypt.genSaltSync(10);
+	var hash = bcrypt.hashSync(password, salt);
+	return model.Users.create({
+		name: name,
+		salt: salt,
+		hash: hash
+	});
+};
 
 exports.addRecipe = function (authorId, name, image, freetext, tags) {
 	return model.Recipes.create({
@@ -30,6 +41,14 @@ exports.addComment = function (recipeId, authorId, freetext) {
 		recipeId: recipeId,
 		authorId: authorId,
 		freetext: freetext
+	});
+};
+
+exports.getRecipe = function (recipeId) {
+	return model.Recipes.findOne({
+		where: {
+			id: recipeId
+		}
 	});
 };
 
