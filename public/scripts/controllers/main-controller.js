@@ -7,7 +7,7 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 	function getUsernames () {
 		$http.get('/api/usernames').then(
 			function (res) {
-				$log.info(res.data);
+				$scope.usernames = res.data;
 			}, function (err) {
 				$log.info(err);
 			}

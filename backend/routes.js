@@ -4,6 +4,13 @@ var express = require('express');
 var router = express.Router();
 var dbm = require('./dbm');
 
+router.get('/usernames', function (req, res) {
+	dbm.getUsernames().then(function (list) {
+		res.json(list);
+		res.end();
+	});
+});
+
 router.get('/recipes', function (req, res) {
 	dbm.getRecipes().then(function (list) {
 		res.json(list);
