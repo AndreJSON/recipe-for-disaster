@@ -1,7 +1,6 @@
 'use strict';
 
-var bcrypt = require('bcypt');
-
+var bcrypt = require('bcrypt');
 var sequelize = require('sequelize');
 var conn = new sequelize('rfd', 'postgres', null, {
 	host: 'localhost',
@@ -11,14 +10,19 @@ var conn = new sequelize('rfd', 'postgres', null, {
 		min: 0,
 		idle: 10000
 	},
-	logging: true //Set to true if debugging needed.
+	logging: false
 });
 
 var model = require('./model.js')(conn); //Create the models.
 
 exports.addUser = function (name, password) {
 	var salt = bcrypt.genSaltSync(10);
-	var hash = bcrypt.hashSync(password, salt);
+	var hash;
+	if(password !== '') { //Allow empty password.
+		hash = bcrypt.hashSync(password, salt);
+	} else {
+		hash = '';
+	}
 	return model.Users.create({
 		name: name,
 		salt: salt,

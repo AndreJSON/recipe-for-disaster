@@ -7,9 +7,10 @@ var chalk = require('chalk');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+require('./paths.js')(app);
+
 var router = require('./routes.js');
 app.use('/api', router);
-require('./paths.js')(app);
 
 app.listen(port);
 console.log(chalk.green("Server is now listening on port: ") + chalk.magenta(port));
