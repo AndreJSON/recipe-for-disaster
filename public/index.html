@@ -15,28 +15,29 @@
 		<script src="/scripts/controllers/main-controller.js"></script>
 		<script src="/scripts/controllers/recipe-controller.js"></script>
 		<script src="/scripts/controllers/login-controller.js"></script>
+		<script src="/scripts/controllers/search-controller.js"></script>
 		<!-- CSS -->
 		<link rel="stylesheet" href="/angular-material-icons/angular-material-icons.css">
 		<link rel="stylesheet" href="/css/style.css">
 	</head>
 	<body ng-app="app" ng-controller="mainController" layout="column">
 		<md-toolbar class="md-whiteframe-z2" layout="row">
-			<div layout="column">
-				<input id="search-field" type="text" placeholder="Search.." ng-model="search" class="aj-unselectable">
-			</div>
-			<md-button class="aj-no-margin" aria-label="search" ng-click="searchRecipes(search)">
-				<ng-md-icon icon="search" size="26"></ng-md-icon>
+			<form name="searchForm" ng-submit="search(searchTerm)">
+				<input id="search-field" type="text" placeholder="Search.." ng-model="searchTerm" class="aj-unselectable">
+			</form>
+			<md-button class="aj-no-margin" aria-label="search" ng-click="search(searchTerm)">
+				<ng-md-icon icon="search" size="40" style="height:40px; width: 40px;"></ng-md-icon>
 			</md-button>
-			<md-button class="aj-no-margin" aria-label="list" ng-click="listRecipes()">
-				<ng-md-icon icon="format_list_bulleted" size="26"></ng-md-icon>
+			<md-button class="aj-no-margin" aria-label="list" ng-click="search('')">
+				<ng-md-icon icon="format_list_bulleted" size="40" style="height:40px; width: 40px;"></ng-md-icon>
 			</md-button>
 			<md-button class="aj-no-margin" aria-label="add" ng-click="newRecipe()">
-				<ng-md-icon icon="add" size="26"></ng-md-icon>
+				<ng-md-icon icon="add" size="40" style="height:40px; width: 40px;"></ng-md-icon>
 			</md-button>
 			<div flex></div>
 			<h3 id="user-text">{{user}}</h3>
 			<md-button class="aj-no-margin" aria-label="logout" ng-click="logout($event)">
-				<ng-md-icon icon="logout" size="26"></ng-md-icon>
+				<ng-md-icon icon="logout" size="40" style="height:40px; width: 40px;"></ng-md-icon>
 			</md-button>
 		</md-toolbar>
 		<md-content flex>

@@ -1,0 +1,13 @@
+<md-content ng-controller="searchController" class="aj-more-space-sides">
+	<h1 class="md-header">{{pageTitle}}</h1>
+	<md-divider></md-divider>
+	<md-list class="aj-no-space">
+		<md-list-item ng-repeat="item in recipes" class="md-2-line" ng-click="null">
+			<div class="md-list-item-text aj-recipe-item">
+				<h2 style="margin: 15px 0 8px 0;">{{item.name}}</h2>
+				<p style="margin-bottom: 5px;"><span ng-repeat="tag in item.tags">{{tag}}<span ng-if="!$last">, </span></span></p>
+			</div>
+			<md-divider></md-divider>
+		</md-list-item>
+	</md-list>
+</md-content>

@@ -1,8 +1,14 @@
 'use strict';
 
-angular.module('app').controller('mainController', function ($scope, $log, $http, $timeout, $mdDialog) {
+angular.module('app').controller('mainController', function ($scope, $log, $http, $timeout, $location, $mdDialog) {
+	$scope.searchTerm = "";
 	$scope.user = '';
 	$scope.usernames = [];
+
+	$scope.search = function (searchTerm) {
+		$location.url('/search?search=' + searchTerm);
+		$scope.searchTerm = "";
+	};
 
 	function authenticateUser (name, password) {
 		$http.post('/api/login', {name: name, password: password}).then(
