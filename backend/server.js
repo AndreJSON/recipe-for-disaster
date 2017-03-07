@@ -7,6 +7,13 @@ var chalk = require('chalk');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+var session = require('express-session');
+app.use(session({
+	secret: 'wowsuchsecretverysecuremuchsecurity',
+	resave: true,
+	saveUninitialized: true
+}));
+
 require('./paths.js')(app);
 
 var router = require('./routes.js');

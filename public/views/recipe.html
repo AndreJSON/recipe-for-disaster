@@ -1,13 +1,16 @@
 <md-content ng-controller="recipeController" class="aj-more-space-sides">
 	<div flex layout="column">
 		<md-card>
-			<md-card-header>
+			<md-card-header layout="row">
 				<md-card-header-text>
 					<span class="md-title">{{recipe.name}}</span>
 					<span class="md-subhead">By: {{usernames[recipe.authorId-1]['name']}}</span>
 				</md-card-header-text>
+				<md-button class="aj-no-margin" aria-label="edit" ng-click="editRecipe">
+					<ng-md-icon icon="edit" size="26"></ng-md-icon>
+				</md-button>
 			</md-card-header>
-			<img ng-src="{{imagePath}}" class="md-card-image" alt="No image available">
+			<img ng-src="{{recipe.image}}" class="md-card-image">
 			<md-card-content>
 				<p>{{recipe.freetext}}</p>
 			</md-card-content>

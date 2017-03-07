@@ -48,6 +48,14 @@ exports.addComment = function (recipeId, authorId, freetext) {
 	});
 };
 
+exports.getUser = function (name) {
+	return model.Users.findOne({
+		where: {
+			name: name
+		}
+	});
+};
+
 exports.getUsernames = function () {
 	return model.Users.findAll({
 		attributes: ['id', 'name'],

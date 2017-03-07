@@ -1,8 +1,48 @@
 'use strict';
 
+var bcrypt = require('bcrypt');
 var express = require('express');
 var router = express.Router();
 var dbm = require('./dbm');
+var sessions = {};
+
+function isAuthenticated (name, sessionID) {
+	if (name === 'Guest' || sessions[sessionID] === name) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+router.post('/login', function (req, res) {
+	dbm.getUser(req.body.name).then(function (user) {
+		if(user.hash === '' && req.body.password === '') {
+			sessions[req.sessionID] = req.body.name;
+			res.json({success: true, name: req.body.name});
+			res.end();
+		} else {
+			bcrypt.compare(req.body.password, user.hash, function (err, success) {
+				if(success) {
+					sessions[req.sessionID] = req.body.name;
+					res.json({success: true, name: req.body.name});
+					res.end();
+				} else {
+					res.json({success: false});
+					res.end();
+				}
+			});
+		}
+	});
+});
+
+router.post('/update-recipe', function (req, res) {
+	if(isAuthenticated(req.body.name, req.sessionID)) {
+		//TODO: do the actual update.
+		res.json({success: true});
+	} else {
+		res.json({success: false});
+	}
+});
 
 router.get('/usernames', function (req, res) {
 	dbm.getUsernames().then(function (list) {
