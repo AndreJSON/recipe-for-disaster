@@ -11,6 +11,7 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 					$scope.user = res.data.name;
 				} else {
 					$log.info("Failed to autenticate.");
+					$scope.logout();
 				}
 			}, function (err) {
 				$log.info(err);

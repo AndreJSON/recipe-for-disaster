@@ -14,21 +14,23 @@ function isAuthenticated (name, sessionID) {
 	}
 }
 
+function loginSuccess (req, res) {
+	sessions[req.sessionID] = req.body.name;
+	res.json({success: true, name: req.body.name});
+	res.end();
+}
+
 router.post('/login', function (req, res) {
 	dbm.getUser(req.body.name).then(function (user) {
-		if(user.hash === '' && req.body.password === '') {
-			sessions[req.sessionID] = req.body.name;
-			res.json({success: true, name: req.body.name});
+		if (user === null) {
+			res.json({success: false});
 			res.end();
+		} else if(user.hash === '' && req.body.password === '') {
+			loginSuccess(req, res);
 		} else {
-			console.log(user.hash);
-			console.log(user.name);
-			console.log(req.body.password);
 			bcrypt.compare(req.body.password, user.hash, function (err, success) {
 				if(success) {
-					sessions[req.sessionID] = req.body.name;
-					res.json({success: true, name: req.body.name});
-					res.end();
+					loginSuccess(req, res);
 				} else {
 					res.json({success: false});
 					res.end();
