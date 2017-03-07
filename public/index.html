@@ -14,6 +14,7 @@
 		<script src="/scripts/app.js"></script>
 		<script src="/scripts/controllers/main-controller.js"></script>
 		<script src="/scripts/controllers/recipe-controller.js"></script>
+		<script src="/scripts/controllers/login-controller.js"></script>
 		<!-- CSS -->
 		<link rel="stylesheet" href="/angular-material-icons/angular-material-icons.css">
 		<link rel="stylesheet" href="/css/style.css">
@@ -34,7 +35,7 @@
 			</md-button>
 			<div flex></div>
 			<h3 id="user-text">{{user}}</h3>
-			<md-button class="aj-no-margin" aria-label="logout" ng-click="logout()">
+			<md-button class="aj-no-margin" aria-label="logout" ng-click="logout($event)">
 				<ng-md-icon icon="logout" size="26"></ng-md-icon>
 			</md-button>
 		</md-toolbar>

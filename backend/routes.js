@@ -21,6 +21,9 @@ router.post('/login', function (req, res) {
 			res.json({success: true, name: req.body.name});
 			res.end();
 		} else {
+			console.log(user.hash);
+			console.log(user.name);
+			console.log(req.body.password);
 			bcrypt.compare(req.body.password, user.hash, function (err, success) {
 				if(success) {
 					sessions[req.sessionID] = req.body.name;
