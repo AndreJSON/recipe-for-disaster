@@ -4,9 +4,17 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 	$scope.user = $scope.$parent.user;
 	$scope.usernames = $scope.$parent.usernames;
 	$scope.recipe = {};
+	$scope.file = null;
+	$scope.uploadStatus = 'Click to add an image';
+	$scope.editing = false;
 
-	$scope.editRecipe = function () {
-
+	$scope.editRecipe = function (bool) {
+		if(bool) {
+			$scope.editing = true;
+		} else {
+			$scope.editing = false;
+			//Send the recipe update.
+		}
 	};
 
 	function getRecipe () {
@@ -21,6 +29,17 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 
 	function init () {
 		getRecipe();
+		$scope.$watch('file', function () {
+			if($scope.file !== null) {
+				$scope.uploadStatus = 'Image successfully uploaded!';
+				Upload.upload({
+					url: '/api/upload',
+					method: 'POST',
+					data: null,
+					file: $scope.file
+				});
+			}
+		});
 	}
 
 	$timeout(init());

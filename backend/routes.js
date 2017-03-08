@@ -5,6 +5,8 @@ var express = require('express');
 var router = express.Router();
 var dbm = require('./dbm');
 var sessions = {};
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 function isAuthenticated (name, sessionID) {
 	if (name === 'Guest' || sessions[sessionID] === name) {
@@ -38,6 +40,10 @@ router.post('/login', function (req, res) {
 			});
 		}
 	});
+});
+
+router.post('/upload', multipartMiddleware, function (req, res) {
+	console.log(req.files);
 });
 
 router.post('/update-recipe', function (req, res) {
