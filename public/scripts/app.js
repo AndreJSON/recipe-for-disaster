@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app', ['ngMaterial', 'ngRoute', 'ngMdIcons'])
+angular.module('app', ['ngMaterial', 'ngRoute', 'ngMdIcons', 'ngFileUpload'])
 	.config(function ($routeProvider) {
 		$routeProvider
 			.when('/', {

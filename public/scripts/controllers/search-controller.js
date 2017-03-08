@@ -3,6 +3,10 @@
 angular.module('app').controller('searchController', function ($scope, $log, $http, $location, $timeout) {
 	$scope.recipes = [];
 
+	$scope.clicked = function (recipe) {
+		$location.url('/recipe?id=' + recipe.id);
+	};
+
 	function getRecipes (searchTerm) {
 		$http.get('/api/recipes?search=' + searchTerm).then(
 			function (res) {

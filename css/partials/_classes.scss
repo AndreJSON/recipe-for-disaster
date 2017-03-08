@@ -37,6 +37,25 @@
 	outline: none;
 }
 
+.aj-list-item-darker {
+	background-color: rgba(160,160,160,0.12);
+}
+
+.aj-list-item-lighter {
+	background-color: rgba(160,160,160,0.03);
+}
+
+.aj-drop-box {
+	background: #F8F8F8;
+	border: 5px dashed #DDD;
+	width: 200px;
+	height: 65px;
+	text-align: center;
+	padding-top: 45px;
+	margin: 10px;
+	cursor: pointer;
+}
+
 #search-field {
 	width: 160px;
 	box-sizing: border-box;

@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 
 module.exports = function (app) {
@@ -9,6 +11,7 @@ module.exports = function (app) {
 	app.use('/angular-material', express.static(__dirname + '/../node_modules/angular-material'));
 	app.use('/angular-material-icons', express.static(__dirname + '/../node_modules/angular-material-icons'));
 	app.use('/css', express.static(__dirname + '/../css'));
-	app.use('/images', express.static(__dirname + '/../images'));
 	app.use('/favicon.ico', express.static(__dirname + '/../images/favicon.ico'));
-}
+	app.use('/images', express.static(__dirname + '/../images'));
+	app.use('/ng-file-upload', express.static(__dirname + '/../node_modules/ng-file-upload/dist'));
+};
