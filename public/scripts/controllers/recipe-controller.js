@@ -37,6 +37,8 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 					method: 'POST',
 					data: null,
 					file: $scope.file
+				}).then(function (res) {
+					$log.info(res);
 				});
 			}
 		});

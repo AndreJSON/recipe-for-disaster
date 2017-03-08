@@ -7,6 +7,7 @@ var dbm = require('./dbm');
 var sessions = {};
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var fs = require('fs');
 
 function isAuthenticated (name, sessionID) {
 	if (name === 'Guest' || sessions[sessionID] === name) {
@@ -43,7 +44,11 @@ router.post('/login', function (req, res) {
 });
 
 router.post('/upload', multipartMiddleware, function (req, res) {
-	console.log(req.files);
+	var path = req.files.file.path;
+	var fileName = path.substring(5);
+	fs.createReadStream(path).pipe(fs.createWriteStream('./images/'+fileName));
+	res.json({image: fileName});
+	res.end();
 });
 
 router.post('/update-recipe', function (req, res) {
