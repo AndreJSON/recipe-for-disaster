@@ -29,6 +29,10 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 		$http.post('/api/new-comment', {recipeId: $location.search().id, freetext: $scope.comment, username: $scope.user}).then(
 			function (res) {
 				$scope.comments.push(res.data);
+				$scope.comment = '';
+				$scope.commentForm.$setPristine();
+				$scope.commentForm.$setValidity();
+				$scope.commentForm.$setUntouched();
 			}, function (err) {
 				$log.info(err);
 			}
