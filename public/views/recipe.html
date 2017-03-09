@@ -3,8 +3,11 @@
 		<md-card>
 			<md-card-header layout="row">
 				<md-card-header-text>
-					<span class="md-title">{{recipe.name}}</span>
-					<span class="md-subhead">By: {{usernames[recipe.authorId-1]['name']}}</span>
+					<span ng-hide="editing" class="md-title">{{recipe.name}}</span>
+					<span ng-hide="editing" class="md-subhead">By: {{usernames[recipe.authorId-1]['name']}}</span>
+					<md-input-container ng-show="editing">
+						<input ng-model="recipe.name" aria-label="title"/>
+					</md-input-container>
 				</md-card-header-text>
 				<md-button ng-hide="editing" class="aj-no-margin" aria-label="edit" ng-click="editRecipe(true)">
 					<ng-md-icon icon="edit" size="26"></ng-md-icon>
@@ -17,11 +20,19 @@
 				{{uploadStatus}}
 			</div>
 			<img ng-hide="editing" ng-src="{{recipe.image === null?  '' : ('/images/' + recipe.image)}}" class="md-card-image">
-			<md-card-content>
-				<p>{{recipe.freetext}}</p>
+			<md-card-content layout="row">
+				<md-input-container ng-if="editing" flex>
+					<textarea ng-model="recipe.freetext" aria-label="freetext" flex></textarea>
+				</md-input-container>
+				<p ng-hide="editing">{{recipe.freetext}}</p>
 			</md-card-content>
 			<md-card-actions layout="row" layout-align="start center">
-				<md-button ng-repeat="item in recipe.tags">{{item}}</md-button>
+				<md-button ng-hide="editing" ng-repeat="item in recipe.tags">{{item}}</md-button>
+				<md-chips ng-if="editing" ng-model="recipe.tags">
+					<md-chip-template>
+						<strong>{{$chip}}</strong>
+					</md-chip-template>
+				</md-chips>
 			</md-card-actions>
 		</md-card>
 	</div>
