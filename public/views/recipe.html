@@ -15,10 +15,10 @@
 				<md-button ng-show="editing" class="aj-no-margin" aria-label="done" ng-click="editRecipe(false)">
 					<ng-md-icon icon="done" size="26"></ng-md-icon>
 				</md-button>
+				<div ng-show="editing" ngf-select ng-model="file" class="aj-drop-box" ngf-multiple="false" accept="image/*" ngf-pattern="'image/*'">
+					{{uploadStatus}}
+				</div>
 			</md-card-header>
-			<div ng-show="editing" ngf-select ng-model="file" class="aj-drop-box" ngf-multiple="false" accept="image/*" ngf-pattern="'image/*'">
-				{{uploadStatus}}
-			</div>
 			<img ng-hide="editing" ng-src="{{recipe.image === null?  '' : ('/images/' + recipe.image)}}" class="md-card-image">
 			<md-card-content layout="row">
 				<md-input-container ng-if="editing" flex>
@@ -34,6 +34,31 @@
 					</md-chip-template>
 				</md-chips>
 			</md-card-actions>
+		</md-card>
+
+		<md-card ng-repeat="comment in comments">
+			<md-card-header layout="row">
+				<md-card-header-text>
+					<span class="md-subhead">#{{comment.id}} {{usernames[comment.authorId-1]['name']}}</span>
+					<p style="margin-bottom: 0">{{comment.freetext}}</p>
+				</md-card-header-text>
+			</md-card-header>
+		</md-card>
+
+		<md-card>
+			<form name="commentForm">
+				<md-card-header layout="row">
+					<md-card-header-text>
+						<span class="md-title">Write a comment</span>
+						<md-input-container class="aj-no-space">
+							<textarea ng-model="comment" aria-label="comment" required></textarea>
+						</md-input-container>
+					</md-card-header-text>
+					<md-button class="aj-no-margin" aria-label="send" ng-click="sendComment()" ng-disabled="!commentForm.$valid" type="submit">
+						<ng-md-icon icon="send" size="26"></ng-md-icon>
+					</md-button>
+				</md-card-header>
+			</form>
 		</md-card>
 	</div>
 </md-content>

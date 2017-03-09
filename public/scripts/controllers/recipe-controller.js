@@ -4,6 +4,7 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 	$scope.user = $scope.$parent.user;
 	$scope.usernames = $scope.$parent.usernames;
 	$scope.recipe = {image: null};
+	$scope.comments = [];
 	$scope.file = null;
 	$scope.uploadStatus = 'Click to add a new image';
 	$scope.editing = false;
@@ -24,6 +25,16 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 		}
 	};
 
+	$scope.sendComment = function () {
+		$http.post('/api/new-comment', {recipeId: $location.search().id, freetext: $scope.comment, username: $scope.user}).then(
+			function (res) {
+				$scope.comments.push(res.data);
+			}, function (err) {
+				$log.info(err);
+			}
+		);
+	};
+
 	function getRecipe () {
 		$http.get('/api/recipe/' + $location.search().id).then(
 			function (res) {
@@ -34,8 +45,19 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 		);
 	}
 
+	function getComments () {
+		$http.get('/api/comments/' + $location.search().id).then(
+			function (res) {
+				$scope.comments = res.data;
+			}, function (err) {
+				$log.info(err);
+			}
+		);
+	}
+
 	function init () {
 		getRecipe();
+		getComments();
 		$scope.$watch('file', function () {
 			if($scope.file !== null) {
 				$scope.uploadStatus = 'Image successfully uploaded!';
@@ -51,6 +73,9 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 		});
 		$scope.$watch('$parent.user', function () {
 			$scope.user = $scope.$parent.user;
+		});
+		$scope.$watch('$parent.usernames', function () {
+			$scope.usernames = $scope.$parent.usernames;
 		});
 	}
 

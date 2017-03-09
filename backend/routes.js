@@ -74,6 +74,15 @@ router.post('/new-recipe', function (req, res) {
 	});
 });
 
+router.post('/new-comment', function (req, res) {
+	dbm.getUser(req.body.username).then( function (user) {
+		dbm.addComment(req.body.recipeId, user.id, req.body.freetext).then( function (comment) {
+			res.json(comment);
+			res.end();
+		});
+	});
+});
+
 router.get('/usernames', function (req, res) {
 	dbm.getUsernames().then(function (list) {
 		res.json(list);

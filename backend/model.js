@@ -45,7 +45,7 @@ module.exports = function (seq) {
 		}
 	});
 
-	model.Comments = seq.define('trades', {
+	model.Comments = seq.define('comments', {
 		id: {
 			type: Sequelize.INTEGER,
 			autoIncrement: true,
