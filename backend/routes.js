@@ -65,6 +65,15 @@ router.post('/update-recipe', function (req, res) {
 	}
 });
 
+router.post('/new-recipe', function (req, res) {
+	dbm.getUser(req.body.username).then( function (user) {
+		dbm.addRecipe(user.id, req.body.name, null, '', []).then( function (recipe) {
+			res.json({id: recipe.id});
+			res.end();
+		});
+	});
+});
+
 router.get('/usernames', function (req, res) {
 	dbm.getUsernames().then(function (list) {
 		res.json(list);

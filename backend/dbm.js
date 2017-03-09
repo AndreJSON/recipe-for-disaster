@@ -57,7 +57,6 @@ exports.updateRecipe = function (recipeId, name, image, freetext, tags) {
 	if(image !== null) {
 		updateObj.image = image;
 	}
-	console.log(updateObj);
 	return model.Recipes.update(updateObj,{
 		where: {
 			id: recipeId

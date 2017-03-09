@@ -25,6 +25,27 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 		);
 	}
 
+	$scope.newRecipe = function (ev) {
+		$mdDialog.show({
+			controller: 'newRecipeController',
+			templateUrl: 'views/new-recipe.html',
+			targetEvent: ev,
+			clickOutsideToClose: false
+		}).then(
+			function (form) {
+				if(form.action === 'done') {
+					$http.post('/api/new-recipe', {name: form.name, username: $scope.user}).then(
+						function (res) {
+							$location.url('/recipe?id='+res.data.id);
+						}, function (err) {
+							$log.info(err);
+						}
+					);
+				}
+			}
+		);
+	};
+
 	$scope.logout = function (ev) {
 		$scope.user = '';
 		$mdDialog.show({
@@ -34,8 +55,6 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 			clickOutsideToClose: false
 		}).then(
 			function (form) {
-				$log.info(form.name);
-				$log.info(form.password);
 				if(form.password === undefined) { //Empty passwords are allowed, but angular might make the field undefined if not filled in.
 					form.password = '';
 				}
