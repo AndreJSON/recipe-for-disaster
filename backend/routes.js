@@ -83,8 +83,7 @@ router.post('/new-comment', function (req, res) {
 	if(isAuthenticated(req.body.username, req.sessionID)) {
 		dbm.getUser(req.body.username).then( function (user) {
 			dbm.addComment(req.body.recipeId, user.id, req.body.freetext).then( function (comment) {
-				comment.success = true;
-				res.json(comment);
+				res.json({success: true, comment: comment});
 				res.end();
 			});
 		});
