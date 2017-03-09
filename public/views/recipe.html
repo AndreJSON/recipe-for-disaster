@@ -27,8 +27,7 @@
 				<p ng-hide="editing">{{recipe.freetext}}</p>
 			</md-card-content>
 			<md-card-actions layout="row" layout-align="start center">
-				<md-button ng-hide="editing" ng-repeat="item in recipe.tags">{{item}}</md-button>
-				<md-chips ng-if="editing" ng-model="recipe.tags">
+				<md-chips readonly="!editing" ng-model="recipe.tags">
 					<md-chip-template>
 						<strong>{{$chip}}</strong>
 					</md-chip-template>
@@ -39,7 +38,7 @@
 		<md-card ng-repeat="comment in comments">
 			<md-card-header layout="row">
 				<md-card-header-text>
-					<span class="md-subhead">#{{comment.id}} {{usernames[comment.authorId-1]['name']}}</span>
+					<span class="md-subhead">#{{$index+1}} {{usernames[comment.authorId-1]['name']}}</span>
 					<p style="margin-bottom: 0">{{comment.freetext}}</p>
 				</md-card-header-text>
 			</md-card-header>

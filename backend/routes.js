@@ -90,9 +90,27 @@ router.get('/usernames', function (req, res) {
 	});
 });
 
+function filterList (list, search) {
+	var res = [],
+		searchTerms = search.split(" ");
+	if(search === '') { //If nothing was specified, show all recipes.
+		return list;
+	}
+	label:
+	for(var counter = 0; counter < list.length; counter++) {
+		for(var innerCounter = 0; innerCounter < searchTerms.length; innerCounter++) {
+			if(list[counter].tags.indexOf(searchTerms[innerCounter].toLowerCase()) !== -1 || list[counter].name.toLowerCase().includes(searchTerms[innerCounter].toLowerCase())) {
+				res.push(list[counter]);
+				continue label;
+			}
+		}
+	}
+	return res;
+}
+
 router.get('/recipes', function (req, res) {
 	dbm.getRecipes().then(function (list) {
-		res.json(list);
+		res.json(filterList(list, req.query.search));
 		res.end();
 	});
 });

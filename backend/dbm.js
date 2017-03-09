@@ -31,6 +31,9 @@ exports.addUser = function (name, password) {
 };
 
 exports.addRecipe = function (authorId, name, image, freetext, tags) {
+	for(var i = 0; i < tags.length; i++) {
+		tags[i] = tags[i].toLowerCase();
+	}
 	return model.Recipes.create({
 		authorId: authorId,
 		name: name,
@@ -49,6 +52,9 @@ exports.addComment = function (recipeId, authorId, freetext) {
 };
 
 exports.updateRecipe = function (recipeId, name, image, freetext, tags) {
+	for(var i = 0; i < tags.length; i++) {
+		tags[i] = tags[i].toLowerCase();
+	}
 	var updateObj = {
 		name: name,
 		freetext: freetext,
