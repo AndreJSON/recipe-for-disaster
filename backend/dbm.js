@@ -48,6 +48,23 @@ exports.addComment = function (recipeId, authorId, freetext) {
 	});
 };
 
+exports.updateRecipe = function (recipeId, name, image, freetext, tags) {
+	var updateObj = {
+		name: name,
+		freetext: freetext,
+		tags: tags
+	};
+	if(image !== null) {
+		updateObj.image = image;
+	}
+	console.log(updateObj);
+	return model.Recipes.update(updateObj,{
+		where: {
+			id: recipeId
+		}
+	});
+};
+
 exports.getUser = function (name) {
 	return model.Users.findOne({
 		where: {

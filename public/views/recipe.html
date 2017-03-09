@@ -6,14 +6,17 @@
 					<span class="md-title">{{recipe.name}}</span>
 					<span class="md-subhead">By: {{usernames[recipe.authorId-1]['name']}}</span>
 				</md-card-header-text>
-				<md-button class="aj-no-margin" aria-label="edit" ng-click="editRecipe(true)">
+				<md-button ng-hide="editing" class="aj-no-margin" aria-label="edit" ng-click="editRecipe(true)">
 					<ng-md-icon icon="edit" size="26"></ng-md-icon>
 				</md-button>
+				<md-button ng-show="editing" class="aj-no-margin" aria-label="done" ng-click="editRecipe(false)">
+					<ng-md-icon icon="done" size="26"></ng-md-icon>
+				</md-button>
 			</md-card-header>
-			<div ngf-select ng-model="file" class="aj-drop-box" ngf-multiple="false" accept="image/*" ngf-pattern="'image/*'">
+			<div ng-show="editing" ngf-select ng-model="file" class="aj-drop-box" ngf-multiple="false" accept="image/*" ngf-pattern="'image/*'">
 				{{uploadStatus}}
 			</div>
-			<img ng-src="/images/{{recipe.image}}" class="md-card-image">
+			<img ng-hide="editing" ng-src="{{recipe.image === null?  '' : ('/images/' + recipe.image)}}" class="md-card-image">
 			<md-card-content>
 				<p>{{recipe.freetext}}</p>
 			</md-card-content>

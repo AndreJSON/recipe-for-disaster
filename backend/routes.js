@@ -52,11 +52,16 @@ router.post('/upload', multipartMiddleware, function (req, res) {
 });
 
 router.post('/update-recipe', function (req, res) {
-	if(isAuthenticated(req.body.name, req.sessionID)) {
-		//TODO: do the actual update.
-		res.json({success: true});
+	if(isAuthenticated(req.body.user, req.sessionID)) {
+		dbm.updateRecipe(req.body.id, req.body.name, req.body.image, req.body.freetext, req.body.tags).then(
+			function () {
+				res.json({success: true});
+				res.end();
+			}
+		);
 	} else {
 		res.json({success: false});
+		res.end();
 	}
 });
 

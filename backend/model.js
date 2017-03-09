@@ -41,7 +41,7 @@ module.exports = function (seq) {
 			type: Sequelize.STRING
 		},
 		tags: {
-			type: Sequelize.ARRAY(Sequelize.INTEGER)
+			type: Sequelize.ARRAY(Sequelize.STRING)
 		}
 	});
 
