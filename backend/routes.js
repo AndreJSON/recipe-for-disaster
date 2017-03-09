@@ -66,21 +66,32 @@ router.post('/update-recipe', function (req, res) {
 });
 
 router.post('/new-recipe', function (req, res) {
-	dbm.getUser(req.body.username).then( function (user) {
-		dbm.addRecipe(user.id, req.body.name, null, '', []).then( function (recipe) {
-			res.json({id: recipe.id});
-			res.end();
+	if(isAuthenticated(req.body.username, req.sessionID)) {
+		dbm.getUser(req.body.username).then( function (user) {
+			dbm.addRecipe(user.id, req.body.name, null, '', []).then( function (recipe) {
+				res.json({success: true, id: recipe.id});
+				res.end();
+			});
 		});
-	});
+	} else {
+		res.json({success: false});
+		res.end();
+	}
 });
 
 router.post('/new-comment', function (req, res) {
-	dbm.getUser(req.body.username).then( function (user) {
-		dbm.addComment(req.body.recipeId, user.id, req.body.freetext).then( function (comment) {
-			res.json(comment);
-			res.end();
+	if(isAuthenticated(req.body.username, req.sessionID)) {
+		dbm.getUser(req.body.username).then( function (user) {
+			dbm.addComment(req.body.recipeId, user.id, req.body.freetext).then( function (comment) {
+				comment.success = true;
+				res.json(comment);
+				res.end();
+			});
 		});
-	});
+	} else {
+		res.json({success: false});
+		res.end();
+	}
 });
 
 router.get('/usernames', function (req, res) {

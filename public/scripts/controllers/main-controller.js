@@ -36,7 +36,9 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 				if(form.action === 'done') {
 					$http.post('/api/new-recipe', {name: form.name, username: $scope.user}).then(
 						function (res) {
-							$location.url('/recipe?id='+res.data.id);
+							if(res.data.success) {
+								$location.url('/recipe?id='+res.data.id);
+							}
 						}, function (err) {
 							$log.info(err);
 						}
