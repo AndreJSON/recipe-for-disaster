@@ -5,11 +5,17 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 	$scope.user = '';
 	$scope.usernames = [];
 
+	/**
+	 * Sets the url to reflect the search and loads the search controller.
+	 */
 	$scope.search = function (searchTerm) {
 		$location.url('/search?search=' + searchTerm);
 		$scope.searchTerm = "";
 	};
 
+	/**
+	 * Performs a login attempt over http using the provided credentials.
+	 */
 	function authenticateUser (name, password) {
 		$http.post('/api/login', {name: name, password: password}).then(
 			function (res) {
@@ -25,6 +31,10 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 		);
 	}
 
+	/**
+	 * Displays a form for creating recipes.
+	 * Upon form completetion, a creation request is sent over http.
+	 */
 	$scope.newRecipe = function (ev) {
 		$mdDialog.show({
 			controller: 'newRecipeController',
@@ -48,6 +58,9 @@ angular.module('app').controller('mainController', function ($scope, $log, $http
 		);
 	};
 
+	/**
+	 * Clears the current user's credentials and displays the login form.
+	 */
 	$scope.logout = function (ev) {
 		$scope.user = '';
 		$mdDialog.show({

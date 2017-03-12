@@ -15,6 +15,11 @@ var conn = new sequelize('rfd', 'postgres', null, {
 
 var model = require('./model.js')(conn); //Create the models.
 
+/**
+ * Adds a new user to the database with the specified login credentials.
+ * Passwords are not stored.
+ * Password hash is computed using bcrypt.
+ */
 exports.addUser = function (name, password) {
 	var salt = bcrypt.genSaltSync(10);
 	var hash;
@@ -51,6 +56,10 @@ exports.addComment = function (recipeId, authorId, freetext) {
 	});
 };
 
+/**
+ * Updates the recipe specified through id, with the new information specified.
+ * Converts all tags to lower case before insertion.
+ */
 exports.updateRecipe = function (recipeId, name, image, freetext, tags) {
 	for(var i = 0; i < tags.length; i++) {
 		tags[i] = tags[i].toLowerCase();

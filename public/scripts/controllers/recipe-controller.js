@@ -9,6 +9,10 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 	$scope.uploadStatus = 'Click to add a new image';
 	$scope.editing = false;
 
+	/**
+	 * Toggles editing mode according to the input boolean.
+	 * If editing is toggled off, any changes made a commited to the server over http.
+	 */
 	$scope.editRecipe = function (bool) {
 		if(bool) {
 			$scope.editing = true;
@@ -63,7 +67,7 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 	function init () {
 		getRecipe();
 		getComments();
-		$scope.$watch('file', function () {
+		$scope.$watch('file', function () { //Makes sure any selected file is uploaded to the server.
 			if($scope.file !== null) {
 				$scope.uploadStatus = 'Image successfully uploaded!';
 				Upload.upload({

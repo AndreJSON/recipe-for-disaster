@@ -9,6 +9,11 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require('fs');
 
+
+/**
+ * Checks if the session with the specified ID is authenticated as the user with the provided name.
+ * @return A boolean stating if the authentication is valid.
+ */
 function isAuthenticated (name, sessionID) {
 	if (name === 'Guest' || sessions[sessionID] === name) {
 		return true;
@@ -17,12 +22,19 @@ function isAuthenticated (name, sessionID) {
 	}
 }
 
+/**
+ * A function that should be called upon successful login.
+ * Adds the user to the list of authenticated users and sends a confirmation to the authenticatee.
+ */
 function loginSuccess (req, res) {
 	sessions[req.sessionID] = req.body.name;
 	res.json({success: true, name: req.body.name});
 	res.end();
 }
 
+/**
+ * Used to perform a login attempt.
+ */
 router.post('/login', function (req, res) {
 	dbm.getUser(req.body.name).then(function (user) {
 		if (user === null) {
@@ -43,6 +55,9 @@ router.post('/login', function (req, res) {
 	});
 });
 
+/**
+ * Used to perform an image upload.
+ */
 router.post('/upload', multipartMiddleware, function (req, res) {
 	var path = req.files.file.path;
 	var fileName = path.substring(5);
@@ -51,6 +66,10 @@ router.post('/upload', multipartMiddleware, function (req, res) {
 	res.end();
 });
 
+/**
+ * Used to update a recipe.
+ * The function will make sure the requester is authorized to perform the action.
+ */
 router.post('/update-recipe', function (req, res) {
 	if(isAuthenticated(req.body.user, req.sessionID)) {
 		dbm.updateRecipe(req.body.id, req.body.name, req.body.image, req.body.freetext, req.body.tags).then(
@@ -65,6 +84,10 @@ router.post('/update-recipe', function (req, res) {
 	}
 });
 
+/**
+ * Used to create a new recipe.
+ * The function will make sure the requester is authorized to perform the action.
+ */
 router.post('/new-recipe', function (req, res) {
 	if(isAuthenticated(req.body.username, req.sessionID)) {
 		dbm.getUser(req.body.username).then( function (user) {
@@ -79,6 +102,10 @@ router.post('/new-recipe', function (req, res) {
 	}
 });
 
+/**
+ * Used to create a new comment.
+ * The function will make sure the requester is authorized to perform the action.
+ */
 router.post('/new-comment', function (req, res) {
 	if(isAuthenticated(req.body.username, req.sessionID)) {
 		dbm.getUser(req.body.username).then( function (user) {
@@ -93,6 +120,9 @@ router.post('/new-comment', function (req, res) {
 	}
 });
 
+/**
+ * Used to retrieve a list of all users on the system.
+ */
 router.get('/usernames', function (req, res) {
 	dbm.getUsernames().then(function (list) {
 		res.json(list);

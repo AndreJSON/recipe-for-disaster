@@ -14,7 +14,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-require('./paths.js')(app);
+require('./paths.js')(app); //File paths.
 
 var router = require('./routes.js');
 app.use('/api', router);
