@@ -19,14 +19,24 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 		} else {
 			$scope.editing = false;
 			$scope.recipe.user = $scope.user;
-			$http.post('/api/update-recipe', $scope.recipe).then(
+			$http.post('/api/update-recipe', JSON.stringify($scope.recipe)).then(
 				function (res) {
 					$log.info(res.data);
 				}, function (err) {
 					$log.info(err);
 				}
 			);
+			$scope.recipe.deleteImage = false;
 		}
+	};
+
+	/**
+	 * Will have the database remove the current image associated with this recipe.
+	 */
+	$scope.deleteImage = function () {
+		$scope.recipe.deleteImage = true;
+		$scope.recipe.image = null;
+		$log.info($scope.recipe);
 	};
 
 	$scope.sendComment = function () {

@@ -75,7 +75,7 @@ router.post('/update-recipe', function (req, res) {
 		dbm.getRecipe(req.body.id).then( function (recipe) {
 			dbm.getUserFromId(recipe.authorId).then(function (user) {
 				if(user.name === req.body.user) {
-					dbm.updateRecipe(req.body.id, req.body.name, req.body.image, req.body.freetext, req.body.tags).then(
+					dbm.updateRecipe(req.body.id, req.body.name, req.body.image, req.body.freetext, req.body.tags, req.body.deleteImage).then(
 						function () {
 							res.json({success: true});
 							res.end();

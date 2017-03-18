@@ -60,7 +60,7 @@ exports.addComment = function (recipeId, authorId, freetext) {
  * Updates the recipe specified through id, with the new information specified.
  * Converts all tags to lower case before insertion.
  */
-exports.updateRecipe = function (recipeId, name, image, freetext, tags) {
+exports.updateRecipe = function (recipeId, name, image, freetext, tags, deleteImage) {
 	for(var i = 0; i < tags.length; i++) {
 		tags[i] = tags[i].toLowerCase();
 	}
@@ -69,8 +69,10 @@ exports.updateRecipe = function (recipeId, name, image, freetext, tags) {
 		freetext: freetext,
 		tags: tags
 	};
-	if(image !== null) {
+	if(image !== null) { //No new image was specified, so use the old one.
 		updateObj.image = image;
+	} else if (deleteImage) { //User has actively deleted image.
+		updateObj.image = null;
 	}
 	return model.Recipes.update(updateObj,{
 		where: {
