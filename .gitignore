@@ -1,7 +1,9 @@
 node_modules
 npm-debug.log
+
 .*
 *.css
 *.css.map
+
 images/*.jpg
 images/*.png
