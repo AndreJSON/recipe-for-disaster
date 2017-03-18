@@ -72,12 +72,21 @@ router.post('/upload', multipartMiddleware, function (req, res) {
  */
 router.post('/update-recipe', function (req, res) {
 	if(isAuthenticated(req.body.user, req.sessionID)) {
-		dbm.updateRecipe(req.body.id, req.body.name, req.body.image, req.body.freetext, req.body.tags).then(
-			function () {
-				res.json({success: true});
-				res.end();
-			}
-		);
+		dbm.getRecipe(req.body.id).then( function (recipe) {
+			dbm.getUserFromId(recipe.authorId).then(function (user) {
+				if(user.name === req.body.user) {
+					dbm.updateRecipe(req.body.id, req.body.name, req.body.image, req.body.freetext, req.body.tags).then(
+						function () {
+							res.json({success: true});
+							res.end();
+						}
+					);
+				} else {
+					res.json({success: false});
+					res.end();
+				}
+			});
+		});
 	} else {
 		res.json({success: false});
 		res.end();

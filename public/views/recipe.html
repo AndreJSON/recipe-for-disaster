@@ -9,7 +9,7 @@
 						<input ng-model="recipe.name" aria-label="title"/>
 					</md-input-container>
 				</md-card-header-text>
-				<md-button ng-hide="editing" class="aj-no-margin" aria-label="edit" ng-click="editRecipe(true)">
+				<md-button ng-hide="editing" ng-disabled="usernames[recipe.authorId-1]['name'] !== user" class="aj-no-margin" aria-label="edit" ng-click="editRecipe(true)">
 					<ng-md-icon icon="edit" size="26"></ng-md-icon>
 				</md-button>
 				<md-button ng-show="editing" class="aj-no-margin" aria-label="done" ng-click="editRecipe(false)">

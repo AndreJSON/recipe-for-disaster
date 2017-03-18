@@ -87,6 +87,14 @@ exports.getUser = function (name) {
 	});
 };
 
+exports.getUserFromId = function (id) {
+	return model.Users.findOne({
+		where: {
+			id: id
+		}
+	});
+};
+
 exports.getUsernames = function () {
 	return model.Users.findAll({
 		attributes: ['id', 'name'],
@@ -103,7 +111,9 @@ exports.getRecipe = function (recipeId) {
 };
 
 exports.getRecipes = function () {
-	return model.Recipes.findAll();
+	return model.Recipes.findAll({
+		order: [['name', 'ASC']]
+	});
 };
 
 exports.getComments = function (recipeId) {
