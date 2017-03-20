@@ -13,19 +13,23 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 	 * Toggles editing mode according to the input boolean.
 	 * If editing is toggled off, any changes made a commited to the server over http.
 	 */
-	$scope.editRecipe = function (bool) {
+	$scope.editRecipe = function (bool, action) {
 		if(bool) {
 			$scope.editing = true;
 		} else {
 			$scope.editing = false;
-			$scope.recipe.user = $scope.user;
-			$http.post('/api/update-recipe', JSON.stringify($scope.recipe)).then(
-				function (res) {
-					$log.info(res.data);
-				}, function (err) {
-					$log.info(err);
-				}
-			);
+			if(action === 'save') {
+				$scope.recipe.user = $scope.user;
+				$http.post('/api/update-recipe', JSON.stringify($scope.recipe)).then(
+					function (res) {
+						$log.info(res.data);
+					}, function (err) {
+						$log.info(err);
+					}
+				);
+			} else {
+				getRecipe();
+			}
 			$scope.recipe.deleteImage = false;
 		}
 	};
