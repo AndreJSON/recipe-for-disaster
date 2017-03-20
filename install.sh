@@ -1,2 +1,2 @@
 npm install
-sass css/style.scss css/style.css
+sass -E "UTF-8" css/style.scss css/style.css
