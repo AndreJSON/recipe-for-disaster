@@ -1,0 +1,18 @@
+<md-dialog aria-label="Swaggie-label">
+	<md-toolbar>
+		<h2 class="md-toolbar-tools">Caution</h2>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			{{text}}
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<md-button ng-click="closeWithValue('no')">
+			No
+		</md-button>
+		<md-button ng-click="closeWithValue('yes')">
+			Yes
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

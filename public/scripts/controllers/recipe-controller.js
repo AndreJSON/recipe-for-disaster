@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('recipeController', function ($scope, $log, $http, $timeout, $location, Upload) {
+angular.module('app').controller('recipeController', function ($scope, $log, $http, $timeout, $location, $mdDialog, Upload) {
 	$scope.user = $scope.$parent.user;
 	$scope.usernames = $scope.$parent.usernames;
 	$scope.recipe = {image: null};
@@ -13,12 +13,12 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 	 * Toggles editing mode according to the input boolean.
 	 * If editing is toggled off, any changes made a commited to the server over http.
 	 */
-	$scope.editRecipe = function (bool, action) {
+	$scope.editRecipe = function (bool, action, ev) {
 		if(bool) {
 			$scope.editing = true;
 		} else {
-			$scope.editing = false;
 			if(action === 'save') {
+				$scope.editing = false;
 				$scope.recipe.user = $scope.user;
 				$http.post('/api/update-recipe', JSON.stringify($scope.recipe)).then(
 					function (res) {
@@ -28,7 +28,22 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 					}
 				);
 			} else {
-				getRecipe();
+				$mdDialog.show({
+					controller: 'confirmationController',
+					templateUrl: 'views/confirmation-dialog.html',
+					locals: {
+						text: 'Are you sure you want to discard the changes?'
+					},
+					targetEvent: ev,
+					clickOutsideToClose: false
+				}).then(
+					function (answer) {
+						if(answer === 'yes') {
+							$scope.editing = false;
+							getRecipe();
+						}
+					}
+				);
 			}
 			$scope.recipe.deleteImage = false;
 		}
