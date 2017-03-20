@@ -20,9 +20,8 @@
 				</md-button>
 			</md-card-header>
 			<div layout="row">
-				<input type="file" ng-show="editing" ngf-select ng-model="file" class="aj-drop-box" ngf-multiple="false" accept="image/*" ngf-pattern="'image/*'">
-					{{uploadStatus}}
-				</input>
+				<label ng-show="editing" type="file" for="file-div" class="aj-drop-box">{{uploadStatus}}</label>
+				<input id="file-div" ng-show="editing" ngf-select ng-model="file" ngf-multiple="false" accept="image/*" ngf-pattern="'image/*'" style="width:0; height:0; border: none">
 				<img ng-hide="!editing || recipe.image === null" ng-src="{{recipe.image === null?  '' : ('/images/' + recipe.image)}}" class="md-card-image" style="max-width:150px; max-height:150px;">
 				<md-button ng-show="editing && recipe.image !== null" class="aj-no-margin" aria-label="delete" ng-click="deleteImage()">
 					<ng-md-icon icon="delete" size="26"></ng-md-icon>
