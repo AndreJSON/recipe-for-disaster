@@ -12,7 +12,10 @@
 				<md-button ng-hide="editing" ng-disabled="usernames[recipe.authorId-1]['name'] !== user" class="aj-no-margin" aria-label="edit" ng-click="editRecipe(true)">
 					<ng-md-icon icon="edit" size="26"></ng-md-icon>
 				</md-button>
-				<md-button ng-show="editing" class="aj-no-margin" aria-label="done" ng-click="editRecipe(false)">
+				<md-button ng-show="editing" class="aj-no-margin" aria-label="close" ng-click="editRecipe(false, 'nosave')">
+					<ng-md-icon icon="close" size="26"></ng-md-icon>
+				</md-button>
+				<md-button ng-show="editing" class="aj-no-margin" aria-label="done" ng-click="editRecipe(false, 'save')">
 					<ng-md-icon icon="done" size="26"></ng-md-icon>
 				</md-button>
 			</md-card-header>
