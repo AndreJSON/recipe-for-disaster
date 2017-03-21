@@ -6,6 +6,7 @@
 					<span ng-hide="editing" class="md-title">{{recipe.name}}</span>
 					<span ng-hide="editing" class="md-subhead">By: {{usernames[recipe.authorId-1]['name']}}</span>
 					<md-input-container ng-show="editing">
+						<label>Title</label>
 						<input ng-model="recipe.name" aria-label="title"/>
 					</md-input-container>
 				</md-card-header-text>
@@ -32,12 +33,13 @@
 			<img ng-hide="editing || recipe.image === null" ng-src="{{recipe.image === null?  '' : ('/images/' + recipe.image)}}" class="md-card-image">
 			<md-card-content layout="row">
 				<md-input-container ng-if="editing" flex>
+					<label>Text</label>
 					<textarea ng-model="recipe.freetext" aria-label="freetext" flex></textarea>
 				</md-input-container>
 				<p ng-hide="editing">{{recipe.freetext}}</p>
 			</md-card-content>
 			<md-card-actions layout="row" layout-align="start center">
-				<md-chips readonly="!editing" ng-model="recipe.tags">
+				<md-chips readonly="!editing" ng-model="recipe.tags" placeholder="Enter a tag...">
 					<md-chip-template>
 						<strong>{{$chip}}</strong>
 					</md-chip-template>
