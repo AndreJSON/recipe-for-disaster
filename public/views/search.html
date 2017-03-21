@@ -4,7 +4,7 @@
 	<md-list class="aj-no-space">
 		<md-list-item ng-repeat="item in recipes" class="md-2-line" ng-class="{'aj-list-item-darker': $even, 'aj-list-item-lighter': $odd}" ng-click="clicked(item)">
 			<div class="md-list-item-text aj-recipe-item" ng-click="clicked(item)">
-				<h2 style="margin: 15px 0 8px 0;">{{item.name}}</h2>
+				<h3 style="margin: 15px 0 8px 0; font-weight: 900;">{{item.name}}</h3>
 				<p style="margin-bottom: 5px;"><span ng-repeat="tag in item.tags">{{tag}}<span ng-if="!$last">, </span></span></p>
 			</div>
 			<md-divider></md-divider>
