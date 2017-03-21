@@ -9,6 +9,26 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 	$scope.uploadStatus = 'Click to add a new image';
 	$scope.editing = false;
 
+	function getRecipe () {
+		$http.get('/api/recipe/' + $location.search().id).then(
+			function (res) {
+				$scope.recipe = res.data;
+			}, function (err) {
+				$log.info(err);
+			}
+		);
+	}
+
+	function getComments () {
+		$http.get('/api/comments/' + $location.search().id).then(
+			function (res) {
+				$scope.comments = res.data;
+			}, function (err) {
+				$log.info(err);
+			}
+		);
+	}
+
 	/**
 	 * Toggles editing mode according to the input boolean.
 	 * If editing is toggled off, any changes made a commited to the server over http.
@@ -73,25 +93,16 @@ angular.module('app').controller('recipeController', function ($scope, $log, $ht
 		);
 	};
 
-	function getRecipe () {
-		$http.get('/api/recipe/' + $location.search().id).then(
-			function (res) {
-				$scope.recipe = res.data;
-			}, function (err) {
-				$log.info(err);
-			}
-		);
-	}
-
-	function getComments () {
-		$http.get('/api/comments/' + $location.search().id).then(
-			function (res) {
-				$scope.comments = res.data;
-			}, function (err) {
-				$log.info(err);
-			}
-		);
-	}
+	$scope.tabCatcher = function (e) {
+		if (e.which === 9) {
+			e.preventDefault();
+			var start = e.target.selectionStart;
+			var end = e.target.selectionEnd;
+			$scope.recipe.freetext = $scope.recipe.freetext.substring(0, start) + '\t' + $scope.recipe.freetext.substring(end);
+			angular.element(e.target).val($scope.recipe.freetext);
+			e.target.selectionStart = e.target.selectionEnd = start + 1;
+		}
+	};
 
 	function init () {
 		getRecipe();

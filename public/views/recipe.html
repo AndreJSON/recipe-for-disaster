@@ -34,7 +34,7 @@
 			<md-card-content layout="row">
 				<md-input-container ng-if="editing" flex>
 					<label>Text</label>
-					<textarea ng-model="recipe.freetext" aria-label="freetext" flex></textarea>
+					<textarea ng-model="recipe.freetext" aria-label="freetext" ng-keydown="tabCatcher($event)" flex></textarea>
 				</md-input-container>
 				<p ng-hide="editing">{{recipe.freetext}}</p>
 			</md-card-content>
