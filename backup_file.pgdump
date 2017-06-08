@@ -1,0 +1,271 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE comments (
+    id integer NOT NULL,
+    "recipeId" integer,
+    "authorId" integer,
+    freetext text,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.comments OWNER TO postgres;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comments_id_seq OWNER TO postgres;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
+
+
+--
+-- Name: recipes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE recipes (
+    id integer NOT NULL,
+    "authorId" integer,
+    name text,
+    image text,
+    freetext text,
+    tags text[],
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.recipes OWNER TO postgres;
+
+--
+-- Name: recipes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE recipes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE recipes_id_seq OWNED BY recipes.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    name text,
+    hash text,
+    salt text,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comments ALTER COLUMN id SET DEFAULT nextval('comments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY recipes ALTER COLUMN id SET DEFAULT nextval('recipes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY comments (id, "recipeId", "authorId", freetext, "createdAt", "updatedAt") FROM stdin;
+1	25	1	Ej provlagad	2017-03-20 21:52:00.409+01	2017-03-20 21:52:00.409+01
+2	22	1	Man borde nog kunna göra pastan tidigare på dagen och ha dem redo för att koka. Kanske ska lägga dem under plastfolie då. Såsen behöver dock fortfarande reducera under minst 30 min.	2017-03-22 10:25:48.336+01	2017-03-22 10:25:48.336+01
+\.
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('comments_id_seq', 2, true);
+
+
+--
+-- Data for Name: recipes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY recipes (id, "authorId", name, image, freetext, tags, "createdAt", "updatedAt") FROM stdin;
+4	1	Moussaka	\N	6 persioner\n\n1 1/2\tst\tgul lök\n3\tst\tvitlöksklyftor\n\t\tolivolja\n750\tg\tkött- eller lammfärs\n500\tg\tkrossade tomater\n3\tmsk\ttomatpure\n1\ttsk\tsocker\n1 1/2\ttsk\tsalt\n\t\tpeppar\n2\tkrm\tkanel\n1\tmsk\ttimjan\n3\tst\tauberginer\n1 1/2\ttsk\tsalt\n5\tdl\tyoghurt\n5\tst\tägg\n\t\tpeppar\n300\tg\tfetaost\n\n1) Skala och finhacka lök och vitlök. Fräs löken i olivolja.\n2) Fräs köttfärsen. Lägg i löken, häll över tomatkrossen och tillsätt tomatpuré, socker, salt, peppar, kanel och timjan. Låt puttra under lock i 30 minuter.\n3) Sätt ugnen på 225 grader\n4) Skölj och skär auberginerna i ca 1 cm tjocka skivor. Lägg ut på dubbelvikt hushållspapper och strö över saltet. Låt ligga i ca 15 min.\n5) Stek auberginskivorna ca 2 min per sida\n6) Varva auberginer och köttfärssås i en lätt smord ugnsäker form.\n7) Vispa yoghurt, ägg och peppar. Häll blandningen i formen och smula över fetaost.\n8) Gratinera i ca 20 min.	{}	2017-03-18 13:22:00.718+01	2017-03-18 14:19:04.097+01
+9	1	Fruktig linsgryta	\N	1\tburk\t\tananasringar (227 g)\n300\tg\t\tmorötter\n1/2\tst\t\tpurjolök\n1\tst\t\tgrön paprika\n1\tst\t\tröd paprika\n2\tmsk\t\ttomatpuré\n1\tmsk\t\tvetemjöl\nx\tdl\t\tförkokta röda linser\n1\tburk\t\tkokosmjölk\n1\tdl\t\tvatten\n1\tmsk\t\tsambal oelek\n2\ttsk\t\tvitvinsvinäger\n1\ttsk\t\tsocker\n1\ttsk\t\ttorkad koriander\n1\ttsk\t\tpaprikapulver\n1\ttsk\t\tsalt\n\t\t\tsvartpeppar\n\t\t\trapsolja\n\n1) Skala morötter och skär i tunna skivor. Finstrimla purjolöken. Tärna paprika och ananas. Spara juicen.\n2) Fräs morötter, paprika och purjolök några minuter i olja.\n3) Rör ner tomatpuré och pudra över mjöl.\n4) Blanda ner linserna, häll på kokosmjölk, vatten och 1 dl av ananasjuicen.\n5) Smaksätt med sambal, vitvinsvinäger, socker, koriander, paprikapulver, salt och svartpeppar.\n6) Lägg i ananasen och låt koka under lock i 4-5 minuter.\n\nServera med ris.	{vegetarisk}	2017-03-18 15:14:06.862+01	2017-03-21 09:35:44.118+01
+1	1	Kesolasagne	\N	1\tst\tgul lök\n2\tst\tvitlöksklyftor\n2\tburkar\tkrossade tomater (800 g)\n500\tg\tfryst bladspenat\n500\tg\tkeso\n1,5\tpkt\tfärska lasagneplattor\n2\tdl\triven ost\n1\tmsk\tchilipulver (ej stark)\n2\ttsk\tsalt\n\t\tsvartpeppar\n\t\tolivolja\n\n1) Sätt ugnen på 225 grader.\n2) Skala och hacka lök och vitlök och fräs den i en stekpanna.\n3) Lägg i spenat och tomatkross. Låt puttra i några minuter.\n4) Krydda, ta av från värmen och tillsätt keso.\n5) Varva kesosåsen med plattor i en smord form. Sås underst och överst. Toppa med riven ost.\n6) Gratinera i ugnen i 20-25 minuter	{vegetarisk,andre,storkok}	2017-03-13 16:03:36.719+01	2017-03-19 00:07:04.774+01
+3	1	Kladdkaka med nötknäck	L9noDjvdcrDo5CV1qGJ5rNcp.jpg		{nötter,efterrätt}	2017-03-18 13:13:20.081+01	2017-03-18 13:14:05.493+01
+38	1	Vietnamesiska vårrullar	S6CVVwXGXfga5Zaxfu1SdueH.JPG		{}	2017-05-07 17:47:28.838+02	2017-05-07 21:28:23.17+02
+7	1	Chokladfondant	aZx-UYM2dUXtWuWwd377K_R_.jpg		{efterrätt,andre}	2017-03-18 13:29:28.403+01	2017-03-22 09:59:06.367+01
+6	1	Morotsoppa	\N	4 portioner\n\n700\tg\tmorötter\n350\tg\tpotatis\n1\tst\tgul lök\n2\tklyftor\tvitlök\n50\tg\tingefära\n8\tdl\tvatten\n2\tst\tbuljongtärningar\n1\tdl\tturkisk yoghurt\n\t\tsalt\n\t\tsvartpeppar\n\n1) Skala och tärna morötter och potatis. Skala och hacka vitlöken och ingefäran.\n2) Lägg allt i en kastrull, lägg i buljongen och fyll på vatten. Koka i 10-15 minuter tills morötterna är mjuka.\n3) Mixa soppan slät, lägg i yoghurten och späd med vatten om det behövs. Smaka av med salt och svartpeppar.\n\nServeras med knäckebröd.\n\nvatten och yoghurt kan bytas ut mot 5 dl vatten och 1 burk kokosmjölk, men då blir soppan  sötare och behöver brytas med något.	{vegetarisk}	2017-03-18 13:28:11.037+01	2017-03-18 13:30:05.862+01
+11	1	Gnocchi med mozzarella och tomater	gc01CkCeyU8F-KsMelSfUvk2.jpg		{vegetarisk,andre}	2017-03-18 15:19:04.363+01	2017-03-22 09:59:50.52+01
+13	1	Nudelsallad	YTxH9AAOUH5L9OSSUUlNUgzm.jpg		{asiatisk,andre}	2017-03-18 15:24:12.256+01	2017-03-22 10:02:19.542+01
+12	1	Potatis och purjolökssoppa	\N	4 portitioner\n\n500\tg\tpotatis\n1\tst\tpurjolök (ca 350 g)\n2\tst\tgrönsaksbuljongstärningar\n8\tdl\tvatten\n1/2\ttsk\tsalt\n1\ttsk\tdragon\n1\ttsk\tbasilika\n\t\tturkisk yoghurt\n\n1) Skala potatisen och skär i små bitar. Skala och skölj purjolöken och skär i skivor.\n2) Blanda allt i en kastrull och koka tills potatisen är mjuk.\n3) Mixa soppan slät.\nServeras med turkisk yoghurt	{vegetarisk}	2017-03-18 15:24:03.377+01	2017-03-18 15:24:46.226+01
+10	1	Risoni risotto	UclyD4WQ9Uv8_KVThUmQzjto.jpg		{andre}	2017-03-18 15:16:29.689+01	2017-03-22 10:02:47.889+01
+8	1	Kycklingsoppa med ingefära och citrongräs	2fJioh13WIS_x_80ULsvXPk1.jpg	Öka till två chilli 🌶	{asiatisk,nudlar}	2017-03-18 14:01:19.223+01	2017-03-18 14:15:49.699+01
+2	1	Mangogryta	dwS4amOVIXDMHt-PbEh31elM.jpg		{storkok}	2017-03-18 12:41:25.548+01	2017-03-18 14:16:17.178+01
+14	1	Rostad rotfruktssoppa med knaperstekt bacon	\N	4 portitioner\n\n2\tpkt\tbacon\n1\tdl\tturksisk yoghurt\n2\tst\tgula lökar\n300\tg\tmorötter\n500\tg\tpalsternacka\n2\tst\tvitlöksklyftor\n2\tst\tkycklingbuljongtärningar\n2\tmsk\tvitvinsvinäger\n 1/2\tkruka\tpersilja\n\t\tsvartpeppar\n\t\tolivolja\n1,3\tliter\tvatten\n\n1) Sätt ugnen på 250 grader\n2) Skala palsternacka, morötter, lök och vitlök. Skär rotfrukterna och gul lök i grova klyftor. Lägg allt i en långpanna och ringla över lite olivolja. Rosta i mitten av ugnen i ca 20 min.\n3) Skär bacon i strimlor och stek utan matfett. Låt rinna av på hushållspapper. Lägg sedan i en skål.\n4) Hacka persiljan och lägg i en skål.\n5) Koka upp vatten med buljongtärningarna.\n6) Lägg i de rostade grönsakerna och mixa till en slät soppa.\n7) Tillsätt yoghurt och vitvinsvinäger. Smaka av med svartpeppar och tillsätt eventuellt mer vatten. Låt soppan sjuda några minuter på svar värme.	{}	2017-03-18 15:25:23.009+01	2017-03-18 15:26:10.801+01
+5	1	Högrevsgryta med rotfrukter	\N	6 portioner\n\n1\tst\tgul lök\n6\tst\tlagerblad\n3\tst\tmorötter\n100\tg\trotselleri\n100\tg\tpalsternacka\n5\tkorn\tvitpeppar\n700\tg\thögrev\n 1/2\tdl\tBongs kalvfond\n7\tdl\tvatten\n\t\trapsolja\n\t\tsmör\n\t\tsvartpeppar\n\n1) Skär köttet i 3x3 cm bitar och bryn i lite olja och smör i en gryta. Häll på kalvfond och vatten så att det täcker köttet.\n2) Koka upp och tag bort skummet. Koka sedan på svag värme i ca 30 min.\n3) Skala lök och rotsaker och skär i skivor. Lägg ner i grytan tillsammans med vitpeppar och lagerblad.\n4) Låt koka i ytterligare 30 min eller till köttbitarna är mjuka.\n5) Avsluta med att smaksätta med ytterligare kalvfond och svartpeppar.	{storkok,potatis}	2017-03-18 13:26:02.28+01	2017-03-18 14:17:50.007+01
+21	1	Yoghurtmarinerad mangokyckling	\N	1\tst\tgul lök\n1/2\tdl\tsolrosfrön\n3/4\tdl\tmango chutney\n2\tdl\tturkisk yoghurt\n3\tst\tvitlöksklyftor\n1/2\tst\tcitron\n3\tcm\tingefära\n3\ttsk\tspiskummin\n1\ttsk\tsalt\n1\tmsk\tsambal\n800\tg\tkycklingfile\n\n1) Sätt ugnen på 225 grader\n2) Finhacka lök och vitlök. Blanda i solrosfrön, mango chutney och turkisk yoghurt. Pressa i citronen, riv i ingefäran och krydda med spiskummin, sambal och salt. Sambal kan bytas mot chili eller cayennepeppar.\n3) Lägg kycklingen i yoghurtblandningen och rör runt så att den blir riktigt insmord.\n4) Lägg över kycklingen i en stor ugnsfast form och häll över resterande yoghurtblandning.\n5) Tillaga ca 15-20 minuter i övre delen av ugnen.\n\nServera med ris	{}	2017-03-18 15:40:37.202+01	2017-03-18 15:41:00.357+01
+17	1	Marockansk saffranskyckling	\N	200\tg\tmorötter\n1\tst\tröd paprika\n1\tst\tgul lök\n600\tg\tkycklinglårfile\n1/2\ttsk\tsalt\n2\tklyftor\tvitlök\n1\tpaket\tsaffran\n1\ttsk\tkanel\n1\ttsk\tspiskummin\n2\ttsk\tsambal\n4\tdl\tvattten\n1\ttärning\tkycklingbuljong\n50\tg\tmandel\n\n1) Skala och tärna morötterna, tärna paprikan och finhacka löken.\n2) Halvera fileerna och bryn i olja. Salta, pressa i vitlöken och tillsätt grönsakerna från punkt 1. Stek i 2-3 minuter.\n3) Rör ner saffran, kanel, spiskummin, sambal, vatten och kycklingbuljong. Sjud under lock i 10 minuter.\n4) Skålla mandeln och tillsätt. Smaka av med salt.\n\nServeras med couscous. Kan strö finhackad persilja över kycklingen.	{}	2017-03-18 15:34:28.784+01	2017-03-19 09:20:18.836+01
+18	1	Chiligryta med mörk choklad	\N	1\tst\tgul lök\n2\tklyftor\tvitlök\n500\tg\tnötfärs\n2\tmsk\ttomatpure\n1\ttsk\tspiskummin\n1/2\ttsk\tsalt\n1\tdl\trött vin\n1\tdl\tvatten\n2\tst\tköttbuljongtärningar\n500\tg\tkörsbärstomater\n1\tförp.\tStora vita bönor\n20\tg\tmörk choklad\n\n1) Finhacka löken och vitlöken\n2) bryn nötfärsen och all lök\n3) Tillsätt tomatpure, spiskummin och salt. Fräs i 2-3 minuter.\n4) blanda i vin, vatten, krossade tomater och buljongtärningar. Koka i 25 minuter.\n5) Skölj bönorna och halvera tomaterna.\n6) Blanda i bönorna, chokladen och sambal. Låt koka i 2-3 minuter.\n7) Blanda i tomaterna och låt bli varma.\n\nServera med ris och grönsaker	{}	2017-03-18 15:36:06.869+01	2017-03-18 17:54:25.962+01
+20	1	Kyckling i ugn med citron och oliver	\N	1,2\tkg\tpotatis\n800\tg\tkycklinglårfileer\n2\ttsk\tsalt\n\t\tsvartpeppar\n1\tst\tcitron\n1\tburk\tblandade örtmarinerade oliver\n1/2\tkruka\trosmarin\n400\tg\tkörsbärstomater.\n\n1) Sätt ugnen på 250 grader\n2) Skala potatisen, skär den i ganska små bitar och lägg den i en ugnspanna eller stor ugnsform.\n3) Putsa kycklingen och lägg över potatisen. Salta och peppra.\n4) Skölj citronen nog. Skär den i tunna skivor och lägg ut i formen.\n5) Lägg ut oliverna och häll ut oljan över blandningen.\n8) Hacka rosmarinen och strö över.\n9) Tillaga i mitten av ugnen ca 25 minuter. Lägg på tomaterna när det är ca 10 minuter kvar. Halvera tomaterna om de är stora.	{}	2017-03-18 15:39:13.38+01	2017-03-18 15:40:22.973+01
+15	1	Ärtbiffar med rostade rotfrukter	\N	8 portitioner\n\n500\tg\t gula ärtor\n1\tst\tgul lök\n2\tst\tvitlöksklyftor\n4\tmsk\tfinhackat persilja\n1\tmsk\tbakpulver\n2\ttsk\tsalt\n1\tmsk\tsvartpeppar\n1\tmsk\tfransk senap\n2\ttsk\ttorkad timjan\n2\ttsk\ttorkad mejram\n\t\trapsolja\n1\tkg\tblandade rotfrukter (morötter, palsternacka, kokt rödbeta etc.)\n1\tdl\tcreme fraiche\n3\tdl\tturkisk yoghurt\n2\tmsk\tfransk senap\n1/2\tkruka\tpersilja\n3\tkrm\tsalt\n2\tkrm\tsvartpeppar\n\t\tolivolja\n\nÄrtbiffar\n1) Blötlägg ärterna i minst 12 timmar\n2) Dela och hacka lök och vitlök.\n3) Mixa ärter, lök, vitlök, persilja, bakpulver, salt och peppar i en matberedare.\n4) Tillsätt senap, timjan och mejram.\n5) forma ca 15 biffar och stek i rikligt med olja i en het panna tills de är gyllenbruna, ca 3-4 minuter per sida.\n\nRotsaker\n1) Sätt ugnen på 200 grader\n2) Skala och dela rotfrukterna i mindre bitar\n3) Lägg i en ugnsäker form och blanda med olja. Tillaga i mitten av ugnen 20-25 min.\n\nSenapsklick\n1) Rör ihop creme fraiche, yoghurt och senap. \n2) Krydda med salt och peppar.	{vegetarisk}	2017-03-18 15:31:06.174+01	2017-03-18 17:55:25.092+01
+16	1	Kalkonwok med röd curry och chilipicklad gurka	\N	250\tg\tbroccoli\n1\tst\tgurka\n500\tg\tkalkon eller kalkonfärs\n1\tburk\tkokosmjölk\n1\tst\tlime\n5\tmsk\tvitvinsvinäger\n3\tmsk\tsocker\n3\tmsk\tvatten\n1\tst\tchili\n2\tklyftor\tvitlök\n2 1/2\tmsk\tröd curry\n1\tst\tkycklingbuljong\n\t\tfisksås\n\t\trapsolja\n\n1) Blanda i en bunke: vitvinsvinäger, socker och vatten, finrivet skal från en lime och finhackad chili.\n2) Hyvla skivor av 1 gurka och blanda ner. Ställ åt sidan.\n3) Skär brockolin i mindre buketter.\n4) Hacka kalkonen i små bitar om du inte har kalkonfärs. \n5) Fräs curryn i lite olja. Lägg i kalkonen och fräs lite till. Pressa ner vitlöken och stek i 2-3 minuter.\n6) Tillsätt kokosmjölk, kycklingbuljong och saften från limen. Sjud i 5 minuter.\n7) lägg i broccolin och sjud i ytterligare 2 minuter.\n8) Smaka av med socker och fisksås.\n\nServeras med t.ex. ris.	{asiatisk}	2017-03-18 15:33:13.516+01	2017-03-18 15:43:10.211+01
+24	1	Phad thai	G2l_np-NIklchIIBxDYhUUfR.jpg		{asiatisk}	2017-03-20 19:31:18.023+01	2017-03-20 21:00:43.26+01
+23	1	Mangoshake	XQcqelfXMhnEosT67KUSS_TJ.jpg		{dryck,frukt}	2017-03-20 19:20:48.302+01	2017-03-20 19:24:50.57+01
+25	1	Pulled gyros med valnötsröra	\N		{}	2017-03-20 21:43:33.591+01	2017-03-20 21:43:33.591+01
+19	1	Mexikansk kikärtsgryta	\N	1/2\tst\tpurjolök\n1\tst\tzucchini\n3\ttsk\tpaprikapulver\n2\ttsk\tspiskummin\n2\ttsk\tmald koriander\n2\tburkar\tkrossade tomater\n1\tförp\tkikärtor\n1\tdl\tcrème fraiche\n1\ttsk\tsalt\n\t\tsvartpeppar\n\t\tmalen chipotlechili\n\n1) Strimla purjolök och tärna zucchini. Fräs tills de blir mjuka utan att få färg.\n2) Tillsätt paprikapulver, spiskummin, koriander, cajennpeppar, chipotlechili, salt, svartpeppar och fräs lite.\n3) Tillsätt krossade tomaterna och kikartorna (sköljda och avrunna). Låt koka upp.\n4) Tillsätt crème fraiche och låt puttra på svag värme i 5-10 minuter utan lock.\n\nServeras med ris	{vegetarisk}	2017-03-18 15:37:49.458+01	2017-03-29 09:44:00.039+02
+27	1	Müsli	\N	20 dl havregryn\n8 dl rågflingor\n5 dl fiberhavregryn\n4 dl havrekärnor\n2 dl bovete\n2 dl linfrön\n2 dl pumpakärnor\n3 dl solrosfrön\n3 dl kokos\n5 dl hackade nötter\n2 msk kardemumma\n6 dl vatten\n1 dl honung\n1 dl neutral olja\n1 dl nyponskal\n2 dl russin\n3 dl torkad frukt i små bitar\n\n1) sätt ugnen på 125 grader varmluft\n2) blanda alla ingredienser fram till kardemumman\n3) värm vattnet och blanda det med honungen och oljan\n4) häll i vattenblandningen och blanda väl\n5) lägg på 3 plåtar och torka i ugnen i 30 minuter\n6) ta ut plåtarna och blanda om väl. Sätt in plåtarna på nya ställen och torka ytterligare 20 minuter. \n7) upprepa steg 6\n8) låt muslin svalna och blanda sedan i de sista ingredienserna	{musli}	2017-03-21 06:48:10.008+01	2017-03-29 09:42:38.674+02
+26	1	Pasta med salsiccia i tomatsås	\N	2 Portioner\n\n~150g Salsiccia (Utan vitlökskyddning)\n1/2 Gul lök\n1/2 dl vitt vin\nOlivolja, peppar, timjan, oregano\n\nStek löken i rikligt med olivolja på låg värme i cirka 10 minuter.\nTillsätt korven och stek vidare på låg värme i ytterliggare 10 minuter (bränn inte löken)\nTillsätt resterande ingridienser, låt puttra tills lagom konsistens är nådd (cirka 1h)	{italiensk}	2017-03-20 23:22:47.026+01	2017-04-13 15:24:01.089+02
+40	1	Vietnamesisk chilidip	0cGaMWnjI4Ti4J37UQqRyz8X.JPG		{}	2017-05-07 21:25:37.563+02	2017-05-07 21:26:05.058+02
+30	1	Högrevsbolognese	gSpK8tGp_8txvnA4u5wDS_BS.JPG		{}	2017-03-31 17:27:37.787+02	2017-03-31 17:34:19.174+02
+28	1	Biff Teriyaki	\N	400\tg\tstrimlat nötkött\n1\tst\tgul lök\n250\tg\tbroccoli\n1/2\ttsk\tsalt\n3/4\tdl\tteriyakisås\n2\tmsk\tjapansk soya\n2\ttsk\tsambal oelek\n2\tdl\tvatten\n\t\tsmör\n\t\tmajsena\n\n1) Skala och skiva lök och morötter. Dela broccolin i små buketter och strimla de späda stjälkarna\n2) Bryn köttet i smör. Salta\n3) Ta upp köttet och fräs grönsakerna. \n4) Lägg tillbaka köttet och häll på teriyakisås, soja, sambal oelek och vattnet\n5) Red av med lite majsena och låt koka i några minuter\n\nServera med ris	{asiatisk}	2017-03-23 08:41:57.765+01	2017-03-23 08:55:01.466+01
+33	1	Lammstek	\N	Ingredienser. Lammstek med honung, vitlök, rosmarin och citron\nPortioner: 8\n1 lammstek med ben, cirka 2 kg\nrejält med flingsalt\n6 vitlöksklyftor\n1 msk rosmarin\n1 dl honung, gärna akacia\nsaften från 1 citron\nsvartpeppar ur kvarn\nTILL SÅSEN:\n3 dl rödvin, gärna fylligt\n1/2 liter kalvfond (vatten + koncentrat)\n1 msk smör\n1 msk vetemjöl\nsvartpeppar\nlite kajennpeppar\nDet finns många sätt att göra lammstek. Jag tycker om att först använda hög värme (för att få vacker och smaklig yta), sedan låta steken gå klart på riktig låg temperatur (så att den blir saftig och mör). Honung, vitlök, rosmarin och citron bidrar med sötma, skärpa, örtighet respektive syra till det smakrika lammköttet. \nAnvänder man urbenad lammstek går det fortare. Använd köttermometer för säkerhets skull.\n\nLammstekar är olika tjocka, ugnar olika varma man kan aldrig vara riktigt säker på hur lång tid det hela tar. En stek kan hållas varm i folie åtminstone en halvtimme (den blir dock lite mer genomstekt om den står så länge). \nOm man använder färsk eller torkad rosmarin i receptet spelar ingen större roll varken i styrka eller kvalitet.	{}	2017-04-14 12:54:53.092+02	2017-04-14 12:56:05.183+02
+31	1	Bolognese på högrev	\N	1\tkg\thögrev\n2\ttsk\tsalt\n1\ttsk\tnymald svartpeppar\n2\tmsk smör\n4\tst vitlöksklyftor\n2\tst\tgula lökar\n1\tdl\trött vin\n2\tstjälkar selleri\n1\tst\tmorot\n1/2\tdl\ttomatpuré\n1\tmsk\tsalvia\n1\tmsk\trosmarin\n1\tst\tlagerblad\n2\tmsk\tkoncentrerad kalvfond\n1\tburk\thela tomater\n4\tdl\tvatten\n1\tdl\tbladpersilja\n1\tdl\triven parmesanost\n\n1) Sätt ugnen på 100 grader\n2) Skär köttet fritt från hinnor och dela i grytbitar\n3) Skala vitlök och lök. Finhacka vitlöken och löken och stek den så att den blir lätt brynt.\n4) Lägg över lök och kött i en gryta. Skölj ur stekpannan med vinet och häll över köttet.\n5) Finskiva selleri. Skala och tärna moroten. Blanda ner i grytan med tomatpuré, öret och fond. Häll på tomat och vatten.\n6) Ställ grytan i ugnen 6-7 timmar.\n7)  Skär persiljan fint. Rör ner persilja och parmesan i grytan.\n\nServeras med tagliateller och riven parmesan	{}	2017-04-01 07:58:07.523+02	2017-04-01 17:33:34.695+02
+34	1	Lingonsylt	\N	600 g lingon\n1 dl vatten\nKoka i ca 5 min. \nTa bort från plattan och rör i 2 dl socker. Rör tills att sockret har smält. Häll upp på ren uppvärmd glasburk. Skruva på locket o låt kallna.	{}	2017-04-17 10:22:56.63+02	2017-04-17 10:26:03.694+02
+32	1	Köttfärsbiffar i tomatsås	\N	~800g köttfärs\n2 burkar krossade tomater\nÖrtkryddor\n2 tsk salt\nSvartpeppar & örtkryddor\n\nPotatis till potatismos\n-----------------------------------------------------\n\nKoka upp potatisvatten\n\nSalta och stek köttfärsen i en stor "kaka".\nDela kakan efterhand för att få mer stekyta, men gör inte färs av allt.\n\nBörja koka potatisen.\n\nTillsätt tomatsås när köttet är nära att bli klart.\nKrydda.\n\nGör mos av potatisen.	{andre,enkel}	2017-04-04 15:23:30.983+02	2017-04-04 15:34:00.24+02
+29	1	Moussaka med oliver och feta	\N	600\tg\taubergin\n1\ttsk\tsalt\n500\tg\tpotatis\n1\tst\tgul lök\n2\tst\tvitlöksklyfta\n2\tburkar krossade tomater\n1 1/2 dl\ttorra röda linser\n2\tdl\toliver\n1 1/2 tsk\tsalt\n1\tmsk\ttorkad oregano\n1\ttsk\ttorkad basilika\n1\ttsk\ttorkad timjan\nolivolja\n3\tdl\tyoghurt\n3\tst\tägg\n\t\tsvartpeppar\n200\tg\tfetaost\n\n1) Sätt ugnen på 225 grader\n2) Skiva auberginen i 1 cm tjocka skivor och lägg på en plåt. Pensla med olivolja och salta. Sätt plåten i ugnen ca 10-15 minuter\n3) Dela oliverna på längden och ta ut kärnorna\n4) Skala och hacka lök och vitlök. Skala och skiva potatisen i 1/2 cm tjocka skivor.\n5) Stek lök, vitlök och potatis i olivolja tills det får lite färg.\n6) Tillsätt tomater, linser, salt och örtkryddorna. Låt puttra under lock i 10 minuter\n7) Vispa ihop yoghurt, ägg och svartpeppar.\n8) Smörj en ugnssäker form. Varva potatisblandningen och auberginerna. Häll över yoghurtsåsen och toppa med smulad fetaost.\n9) Gratinera mitt i ugnen 20-30 minuter tills potatisen är mjuk	{vegetarisk}	2017-03-29 15:17:25.785+02	2017-03-31 07:44:52.672+02
+22	1	Hemgjord fylld pasta med tomatsås	\N	Till 3 personer\nTar cirka 1 timme från att du sätter på tomatsåsen. Alltså minst 1.5h totalt.\n\n---------------------\n\nPastan:\n140g vetemjöl\n140g durumvete\n3 ägg\nLite olivolja\n\nGör en vulkan av mjölet och kläck ägg samt häll olja i mitten. Tillsätt långsamt mjölet tills smeten blir en deg. Arbeta i minst 10 minuter eller tills degen känns homogen och hård. Om degen smular sig kan några milliliter vatten tillföras åt gången tills den håller ihop, men ej är kladdig. Stäng in i folie och låt sedan vila i kyl minst 30 min.\n\n---------------------\n\nFyllningen:\n200g ricotta\nMajoriteten av en basilikakruka\n70g riven parmesanost\n\nMixa ricottan och basilikan med en stavmixer. Tillsätt osten och mixa lite till.\n\n---------------------\n\nSåsen:\nEn burk plommon-/körsbärstomater\n1 vitlöksklyfta\nOlivolja till stekning\nCirka en halv dl torrt vitt vin\nNågra blad färsk basilika\nPyttelite socker\nSalt & svartpeppar efter behov\n\nStrax innan du tänkt ta fram pastadegen kan du börja med såsen. Börja med att fräsa vitlöken i olivolja på mellanhög värme. Tillsätt därefter tomaterna, vinet och sockret. Låt reduceras medan du fyller pastan och smaka sist av med salt, peppar och färsk basilika, precis innan du ska koka pastan.\n\n---------------------\n\nFyll pastan:\ndela degen i 4 delar och låt de oarbetade delarna lika inlindade i foliet när de inte används. Kavla ut en i taget så tunnt det går och skär ut cirklar ur degen med ett stort dricksglas. Lägg på sparsamt med fyllning och vik ihop till halvmånar. Pensla lite vatten på kontaktytan för att enklare få ihop månarna. Gör om för alla 4 delar samt ytterligare en gång för svinnet.\n\nKoka pastan i cirka 1-3 minuter beroende på tjocklek.\nFör att undvika att de går sönder, sänk ned och ta upp med hålslev, samt koka i två omgångar.\nDe färdigkokta pastana kan läggas ned direkt i tomatsåsen och serveras så.	{basilika,andre,lyx}	2017-03-20 19:06:05.634+01	2017-03-31 10:05:17.066+02
+36	1	Köttfärspaj	\N	Pajdeg nog att fylla stora glasformen\n\n800g köttfärs\n1-2 gula lökar\n2dl rött vin\n1 burk krossade (eller körsbärs-) tomater\n2 tsk sambal\n1 msk tomatpuré\n2,5 tsk salt\n3 tsk oregano\n\n4dl mjölk\n4 ägg\n2 dl riven ost\nLite Cayenne, paprika pulver samt svartpeppar i röran för utseende/smak.\n\n---------------------------------------------------------------------------\nBörja med att hacka lök och lägg den i pannan.\n\nFörgrädda pajdegen enligt beskrivning.\n\nStek köttfärs och krydda.\nLåt puttra tills den är relativt vätskefattig.\n\nRör ihop äggstanningen.\n\nHäll köttfärs, sedan ost och sist äggstanning i den gräddade degen.\nGrädda i ugn på 200 grader.	{}	2017-04-23 17:51:53.954+02	2017-04-23 18:02:14.198+02
+35	1	Scones	\N	2 personer\n\nKnappt 4dl mjöl\n1/2 tsk salt\n2 tsk bakpulver\n50g smör\n1,5 dl mjölk\n\nSätt ugnen på 250 grader.\nBlanda torra ingridienser.\nMosa smöret med händerna bland de torra ingridienserna. Mosa inte för mycket.\nTillsätt mjölk och rör ihop snabbt med en sked.\n\nGrädda i två fyrdelade kakor.\nNagga kakorna för hårdare skal.\nKräver knappt 10 min i ugnen.	{frukost}	2017-04-22 10:17:55.296+02	2017-04-22 10:23:11.232+02
+37	1	Nudelbowl	rrryHnqXvJ52oCbrxc8ZQlY0.JPG		{}	2017-05-07 12:08:36.939+02	2017-06-08 20:47:35.117+02
+39	1	Lemongrass tofu	eenkU6qVLPVskhy5x81jbkAT.JPG		{asiatisk,vegetarisk}	2017-05-07 17:51:37.801+02	2017-06-08 20:50:09.243+02
+\.
+
+
+--
+-- Name: recipes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('recipes_id_seq', 40, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY users (id, name, hash, salt, "createdAt", "updatedAt") FROM stdin;
+1	Guest		$2a$10$CJ8ZS63/Jt9JU8KFyWGNW.	2017-03-13 16:03:05.241+01	2017-03-13 16:03:05.241+01
+2	Andre		$2a$10$tmWHjglEsY9TSm8vEYWYNe	2017-03-13 16:03:05.245+01	2017-03-13 16:03:05.245+01
+3	Mamma		$2a$10$7.grD4LYpGWNSjcoQjQ/A.	2017-03-13 16:03:05.245+01	2017-03-13 16:03:05.245+01
+4	Emilia		$2a$10$QjF/lrTfbCrh3GaN9vn0ne	2017-03-13 16:03:05.246+01	2017-03-13 16:03:05.246+01
+5	Pappa		$2a$10$CD9kTMagcmM9H94lGes07e	2017-03-13 16:03:05.246+01	2017-03-13 16:03:05.246+01
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('users_id_seq', 5, true);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
