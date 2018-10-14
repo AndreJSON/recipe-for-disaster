@@ -236,6 +236,9 @@ COPY public.recipes (id, "authorId", name, image, freetext, tags, "createdAt", "
 50	1	Marockansk gryta	\N	1 st gul lök\n2 klyftor vitlök\n2 st röda chili\n1 msk vitvinsvinäger\n1 msk tomatpuré\n1 1/2 tsk harissa eller sambal oelek\n1 burk krossade tomater\n1/2 tsk spiskummin, rostad och mortlad\n0,5 g saffran\n1 tsk mald ingefära\n1/2 tsk kanel\n1/2 msk paprikapulver\n1 tärning grönsaksbuljong\n3 dl vatten\n400 g sötpotatis\n400 g kikärtor\n1 dl svarta oliver\n1 1/2 msk pressad citron\nsalt\nsvartpeppar\nolivolja\n\nTill servering:\nrivet citronskal\nhackad färsk persilja\nhackad färsk koriander\n1/2 dl russin (blötlagda i 20 minuter)\n\n1) hacka lök, vitlök och chili. Dela sötpotatisen i 2x2 cm kuber.\n2) Fräs på låg värme i olivolja så att det mjuknar\n3) Häll på vinäger och låt ånga bort\n4) Rör ner harissa och tomatpuré\n5) lägg i krossade tomater, kryddor, buljong och vatten.\n6) Koka upp och låt sjuda i 15 minuter\n7) Tillsätt sötpotatisen och sköljda kikärtor\n8) koka i ytterligare 20 minuter. Kontrollera sötpotatisen så att den inte kokar sönder\n9) Vänd ner oliver, citronsaft och smaka av med salt och peppar.\n\nServeras med couscous eller bulgur	{}	2018-04-01 15:23:19.939+02	2018-04-01 15:35:05.98+02
 51	1	Jiap che	HR_7ntHF8z9a8LktCa9HYKQ4.jpeg	Lagom för 4-5 hungriga. Minska socker o ev öka soja o vinäger	{}	2018-04-24 19:00:11.275+02	2018-04-24 19:02:19.87+02
 52	1	Gryta med Sötpotatis och Haloumi	\N	2,5\tdl\tröda linser\n1\tst\tfinhackad lök\n1,5\tklyfta hackad vitlök\n100\tg\tsojabönor\n500\tg\tsötpotatis\n1\tdl\tkvarngryn\n125\tg\tgrönkål\n200\tg \thaloumi\n?\tdl\tvatten\n1/2\tburk\tkokosmjölk\n2\ttsk\tkoriander\n2\ttsk\tingefära\n2\ttsk\tkummin\n1\tkrm\tkanel\n1,5\ttsk\tgurkmeja\n2\tkrm\tkardemumma\n2\tkrm\tkryddpeppar\n3\tkrm\tcayennepeppar\n1\tkrm\tfänkål\n1\tmsk\tcitron\n1\ttsk\tsalt\nsvartpeppar\n\nfräs lök och vitlök på låg värme\nTillsätt alla kryddor och fräs\nHäll på vatten och kokosmjölk\ntillsätt röda linser, kvarngryn och sötpotatis\nkoka tills det är nästan färdigt\ntillsätt haloumi, sojabönor och grönkål\nkoka tills allt är varmt	{}	2018-05-01 10:39:14.075+02	2018-06-16 09:42:07.677+02
+53	1	Nudelsallad med misokyckling	9VgiPll7Di8O2JLRKPtI1oO1.jpg	Går bra med glasnudlar också. 300 g lagom för ca 10 p ( 1,5 kg kyckling).	{}	2018-08-07 07:27:47.885+02	2018-08-07 07:30:00.96+02
+54	1	Pavlovaefterrätt på snabbt vis	\N	Vispa grädde o blanda med lika delar turkisk yoghurt samt ca 2 tsk vardera av vaniljsocker och florsocker - till 4 dl grädde ( o 4 dl yogh). Riv gärna i skal från citron. \nBred ut på maränger och täck sedan med bär och frukter. T ex hallon, blåbär, björnbär, persika och sist lite nötter t ex valnötter. Denna sats räcker bra till ca 7-8 st.	{}	2018-08-07 07:31:12.596+02	2018-08-07 07:36:35.431+02
+55	1	Test	\N		{}	2018-10-09 21:36:33.377+02	2018-10-09 21:36:33.377+02
 \.
 
 
@@ -243,7 +246,7 @@ COPY public.recipes (id, "authorId", name, image, freetext, tags, "createdAt", "
 -- Name: recipes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.recipes_id_seq', 52, true);
+SELECT pg_catalog.setval('public.recipes_id_seq', 55, true);
 
 
 --
